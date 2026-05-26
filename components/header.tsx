@@ -30,10 +30,9 @@ export function Header() {
           <span className="text-lg font-black text-ink dark:text-white">FieldConvert</span>
         </Link>
         <nav className="ml-auto hidden items-center gap-5 text-sm font-bold text-slate-700 dark:text-slate-300 md:flex">
-          <Link href="/convert/hectare-to-acre">Land</Link>
-          <Link href="/construction/concrete-calculator">Concrete</Link>
-          <Link href="/farming/crop-spacing-calculator">Farming</Link>
-          <Link href="/admin">Admin</Link>
+          <Link href="/convert/cm-to-inch">cm to inch</Link>
+          <Link href="/convert/hectare-to-acre">ha to acre</Link>
+          <Link href="/convert/kilogram-to-pound">kg to lb</Link>
         </nav>
         <button
           onClick={toggleTheme}
