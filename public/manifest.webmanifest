@@ -1,0 +1,28 @@
+{
+  "name": "FieldConvert",
+  "short_name": "FieldConvert",
+  "description": "Fast unit conversions and field calculators for worksites, farms and classrooms.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8f4",
+  "theme_color": "#1f7a5a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Concrete calculator",
+      "url": "/construction/concrete-calculator"
+    },
+    {
+      "name": "Hectare to acre",
+      "url": "/convert/hectare-to-acre"
+    }
+  ]
+}

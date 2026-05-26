@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FieldConvert Preview</title>
+    <meta name="description" content="Static preview of FieldConvert while the Next.js app dependencies are installed." />
+    <style>
+      :root { color-scheme: light; --bg: #f7f8f4; --ink: #101418; --field: #1f7a5a; --clay: #b8562f; --muted: #5d6875; --line: #d9ded8; --card: #fff; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--ink); }
+      header { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
+      .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+      .bar { min-height: 64px; display: flex; align-items: center; gap: 12px; }
+      .logo { width: 40px; height: 40px; border-radius: 10px; background: var(--field); color: white; display: grid; place-items: center; font-weight: 900; }
+      h1 { font-size: clamp(2.3rem, 8vw, 4.8rem); line-height: .98; letter-spacing: 0; margin: 0; max-width: 850px; }
+      h2 { font-size: 1.6rem; margin: 0 0 16px; }
+      p { color: var(--muted); line-height: 1.65; }
+      .hero { display: grid; gap: 28px; padding: 28px 0 40px; }
+      .panel, .tile { background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 16px 40px rgba(16,20,24,.08); }
+      .panel { padding: 18px; }
+      input, select { width: 100%; min-height: 54px; border: 1px solid #cbd5c8; border-radius: 8px; padding: 0 14px; font-size: 1rem; background: #fbfcfa; }
+      button, a.btn { min-height: 44px; border: 0; border-radius: 8px; padding: 0 16px; background: var(--ink); color: white; font-weight: 800; display: inline-flex; align-items: center; text-decoration: none; }
+      .result { margin-top: 14px; padding: 16px; border-radius: 8px; background: #eef7f2; font-size: 1.25rem; font-weight: 900; }
+      .grid { display: grid; gap: 12px; }
+      .tiles { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+      .tile { padding: 16px; box-shadow: none; }
+      .tag { color: var(--field); text-transform: uppercase; font-size: .78rem; font-weight: 900; letter-spacing: .08em; }
+      .section { padding: 34px 0; }
+      @media (min-width: 860px) { .hero { grid-template-columns: 1.08fr .92fr; align-items: center; padding: 52px 0; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap bar">
+        <div class="logo">FC</div>
+        <strong>FieldConvert</strong>
+        <a class="btn" style="margin-left:auto" href="../README.md">Docs</a>
+      </div>
+    </header>
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="tag">Static local preview</div>
+          <h1>Fast field conversions for work, farms and classrooms.</h1>
+          <p>This is a dependency-free preview. The complete Next.js app source is in the project folder and will run with npm once Node.js package management is available.</p>
+        </div>
+        <div class="panel">
+          <div class="tag">Try conversion</div>
+          <h2>Length converter</h2>
+          <div class="grid">
+            <input id="amount" type="number" value="6.1667" />
+            <select id="from">
+              <option value="0.3048">foot</option>
+              <option value="0.01">centimeter</option>
+              <option value="0.0254">inch</option>
+              <option value="1">meter</option>
+            </select>
+            <select id="to">
+              <option value="0.01">centimeter</option>
+              <option value="0.0254">inch</option>
+              <option value="0.3048">foot</option>
+              <option value="1">meter</option>
+            </select>
+          </div>
+          <div class="result" id="result"></div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="tag">MVP scope</div>
+        <h2>Startup-quality foundation</h2>
+        <div class="grid tiles">
+          <div class="tile"><strong>Next.js App Router</strong><p>Static SEO conversion routes, API route, sitemap and robots.</p></div>
+          <div class="tile"><strong>PWA ready</strong><p>Manifest, app icon, service worker and installable mobile shell.</p></div>
+          <div class="tile"><strong>Field calculators</strong><p>Concrete, crop spacing, fertilizer, tank volume, diesel, solar, roofing and paint.</p></div>
+          <div class="tile"><strong>African market focus</strong><p>Metric/imperial support, regional currencies and low-bandwidth UI.</p></div>
+        </div>
+      </section>
+    </main>
+    <script>
+      const amount = document.getElementById('amount');
+      const from = document.getElementById('from');
+      const to = document.getElementById('to');
+      const result = document.getElementById('result');
+      function update() {
+        const value = Number(amount.value || 0) * Number(from.value) / Number(to.value);
+        result.textContent = new Intl.NumberFormat('en', { maximumFractionDigits: 4 }).format(value);
+      }
+      [amount, from, to].forEach((el) => el.addEventListener('input', update));
+      update();
+    </script>
+  </body>
+</html>
