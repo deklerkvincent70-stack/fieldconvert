@@ -5,17 +5,27 @@ import { useMemo, useState } from 'react';
 import { categories } from '@/lib/conversions/data';
 import { convert, findCategory, formatNumber } from '@/lib/conversions/engine';
 
-export function ConverterPanel({ categoryId, fromId, toId }: { categoryId: string; fromId: string; toId: string }) {
+export function ConverterPanel({ categoryId, fromId, toId, compact = false }: { categoryId: string; fromId: string; toId: string; compact?: boolean }) {
   const [value, setValue] = useState(1);
+  const [activeCategoryId, setActiveCategoryId] = useState(categoryId);
   const [from, setFrom] = useState(fromId);
   const [to, setTo] = useState(toId);
-  const category = findCategory(categoryId) ?? categories[0];
-  const result = useMemo(() => convert(category.id, from, to, value || 0), [category.id, from, to, value]);
+  const category = findCategory(activeCategoryId) ?? categories[0];
+  const validFrom = category.units.some((unit) => unit.id === from) ? from : category.units[0].id;
+  const validTo = category.units.some((unit) => unit.id === to) ? to : category.units[1]?.id ?? category.units[0].id;
+  const result = useMemo(() => convert(category.id, validFrom, validTo, value || 0), [category.id, validFrom, validTo, value]);
   const text = `${formatNumber(value)} ${result.from.symbol} = ${formatNumber(result.value)} ${result.to.symbol}`;
 
+  function changeCategory(nextCategoryId: string) {
+    const nextCategory = findCategory(nextCategoryId) ?? categories[0];
+    setActiveCategoryId(nextCategory.id);
+    setFrom(nextCategory.popular[0] ?? nextCategory.units[0].id);
+    setTo(nextCategory.popular[1] ?? nextCategory.units[1]?.id ?? nextCategory.units[0].id);
+  }
+
   function swap() {
-    setFrom(to);
-    setTo(from);
+    setFrom(validTo);
+    setTo(validFrom);
   }
 
   async function copy() {
@@ -35,8 +45,22 @@ export function ConverterPanel({ categoryId, fromId, toId }: { categoryId: strin
   }
 
   return (
-    <section className="mt-6 rounded-lg border border-slate-200 bg-white p-4 shadow-soft dark:border-slate-800 dark:bg-slate-950">
-      <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr] md:items-end">
+    <section className={`${compact ? '' : 'mt-6'} rounded-lg border border-slate-200 bg-white p-4 shadow-soft dark:border-slate-800 dark:bg-slate-950 sm:p-5`}>
+      <label className="grid gap-2">
+        <span className="text-sm font-bold text-slate-600 dark:text-slate-300">Category</span>
+        <select
+          value={category.id}
+          onChange={(event) => changeCategory(event.target.value)}
+          className="h-14 rounded-lg border border-slate-300 bg-white px-3 text-base font-bold dark:border-slate-700 dark:bg-slate-900"
+        >
+          {categories.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto_1fr] md:items-end">
         <label className="grid gap-2">
           <span className="text-sm font-bold text-slate-600 dark:text-slate-300">From</span>
           <input
@@ -45,7 +69,7 @@ export function ConverterPanel({ categoryId, fromId, toId }: { categoryId: strin
             onChange={(event) => setValue(Number(event.target.value))}
             className="h-14 rounded-lg border border-slate-300 bg-slate-50 px-4 text-lg font-bold outline-none ring-field/30 focus:ring-4 dark:border-slate-700 dark:bg-slate-900"
           />
-          <select value={from} onChange={(event) => setFrom(event.target.value)} className="h-12 rounded-lg border border-slate-300 bg-white px-3 dark:border-slate-700 dark:bg-slate-900">
+          <select value={validFrom} onChange={(event) => setFrom(event.target.value)} className="h-12 rounded-lg border border-slate-300 bg-white px-3 dark:border-slate-700 dark:bg-slate-900">
             {category.units.map((unit) => (
               <option key={unit.id} value={unit.id}>
                 {unit.label} ({unit.symbol})
@@ -58,8 +82,13 @@ export function ConverterPanel({ categoryId, fromId, toId }: { categoryId: strin
         </button>
         <label className="grid gap-2">
           <span className="text-sm font-bold text-slate-600 dark:text-slate-300">To</span>
-          <output className="flex h-14 items-center rounded-lg bg-slate-100 px-4 text-lg font-black text-ink dark:bg-slate-900 dark:text-white">{formatNumber(result.value)}</output>
-          <select value={to} onChange={(event) => setTo(event.target.value)} className="h-12 rounded-lg border border-slate-300 bg-white px-3 dark:border-slate-700 dark:bg-slate-900">
+          <input
+            readOnly
+            value={formatNumber(result.value)}
+            className="h-14 rounded-lg border border-slate-200 bg-slate-100 px-4 text-lg font-black text-ink outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            aria-label="Converted value"
+          />
+          <select value={validTo} onChange={(event) => setTo(event.target.value)} className="h-12 rounded-lg border border-slate-300 bg-white px-3 dark:border-slate-700 dark:bg-slate-900">
             {category.units.map((unit) => (
               <option key={unit.id} value={unit.id}>
                 {unit.label} ({unit.symbol})
