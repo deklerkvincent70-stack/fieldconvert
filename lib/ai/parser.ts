@@ -27,8 +27,7 @@ export function parseNaturalLanguage(input: string): ParseSuggestion[] {
     suggestions.push({
       confidence: 0.82,
       intent: 'currency',
-      message: `Currency conversion detected: ${currencyMatch.from} to ${currencyMatch.to}. Connect CURRENCY_API_KEY for live rates.`,
-      href: `/convert/${currencyMatch.from.toLowerCase()}-to-${currencyMatch.to.toLowerCase()}`
+      message: `Currency conversion detected: ${currencyMatch.from} to ${currencyMatch.to}. Live exchange rates are coming soon.`
     });
   }
 

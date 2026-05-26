@@ -1,4 +1,3 @@
-import { AiConvertBox } from '@/components/ai-convert-box';
 import { CalculatorGrid } from '@/components/calculator-grid';
 import { CategoryGrid } from '@/components/category-grid';
 import { ConverterPanel } from '@/components/converter-panel';
@@ -21,9 +20,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
-      <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-        <AiConvertBox />
       </section>
       <CategoryGrid categories={categories} />
       <CalculatorGrid calculators={calculators} />

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Moon, Search, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export function Header() {
@@ -35,12 +35,9 @@ export function Header() {
           <Link href="/farming/crop-spacing-calculator">Farming</Link>
           <Link href="/admin">Admin</Link>
         </nav>
-        <Link href="/#ai" className="ml-auto grid h-10 w-10 place-items-center rounded-lg border border-slate-200 text-slate-700 dark:border-slate-700 dark:text-slate-200 md:ml-2" aria-label="Search">
-          <Search size={20} />
-        </Link>
         <button
           onClick={toggleTheme}
-          className="grid h-10 w-10 place-items-center rounded-lg border border-slate-200 text-slate-700 dark:border-slate-700 dark:text-slate-200"
+          className="ml-auto grid h-10 w-10 place-items-center rounded-lg border border-slate-200 text-slate-700 dark:border-slate-700 dark:text-slate-200 md:ml-2"
           aria-label="Toggle dark mode"
         >
           {dark ? <Sun size={20} /> : <Moon size={20} />}
