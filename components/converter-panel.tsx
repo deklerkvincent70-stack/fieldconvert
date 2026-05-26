@@ -1,6 +1,6 @@
 'use client';
 
-import { Copy, RotateCcw, Share2, Star } from 'lucide-react';
+import { Copy, RotateCcw, Share2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { categories } from '@/lib/conversions/data';
 import { convert, findCategory, formatNumber } from '@/lib/conversions/engine';
@@ -36,12 +36,6 @@ export function ConverterPanel({ categoryId, fromId, toId, compact = false }: { 
   async function share() {
     saveRecent(text);
     if (navigator.share) await navigator.share({ title: 'FieldConvert conversion', text, url: location.href });
-  }
-
-  function favorite() {
-    const key = 'fieldconvert:favorites';
-    const saved = JSON.parse(localStorage.getItem(key) ?? '[]') as string[];
-    localStorage.setItem(key, JSON.stringify(Array.from(new Set([location.pathname, ...saved])).slice(0, 20)));
   }
 
   return (
@@ -103,9 +97,6 @@ export function ConverterPanel({ categoryId, fromId, toId, compact = false }: { 
         </button>
         <button onClick={share} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-bold dark:border-slate-700">
           <Share2 size={18} /> Share
-        </button>
-        <button onClick={favorite} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-bold dark:border-slate-700">
-          <Star size={18} /> Save
         </button>
         <p className="ml-auto text-sm font-semibold text-slate-500">{text}</p>
       </div>
