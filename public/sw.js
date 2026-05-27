@@ -1,5 +1,5 @@
-const CACHE = 'concretemix-pro-v1';
-const CORE = ['/', '/manifest.webmanifest', '/icons/icon.svg', '/screenshots/mobile.svg', '/screenshots/desktop.svg'];
+const CACHE = 'fieldconvert-v3';
+const CORE = ['/', '/manifest.webmanifest', '/icons/icon.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)));
