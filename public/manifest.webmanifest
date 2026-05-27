@@ -1,10 +1,10 @@
 {
-  "name": "FieldConvert",
-  "short_name": "FieldConvert",
-  "description": "Fast unit conversions and field calculators for worksites, farms and classrooms.",
+  "name": "ConcreteMix Pro",
+  "short_name": "ConcreteMix",
+  "description": "Offline concrete calculator for volume, materials, costs, batches and printable estimates.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f7f8f4",
+  "background_color": "#f4f2ea",
   "theme_color": "#1f7a5a",
   "orientation": "portrait-primary",
   "icons": [
@@ -17,12 +17,12 @@
   ],
   "shortcuts": [
     {
-      "name": "Concrete calculator",
-      "url": "/construction/concrete-calculator"
+      "name": "New concrete estimate",
+      "url": "/"
     },
     {
-      "name": "Hectare to acre",
-      "url": "/convert/hectare-to-acre"
+      "name": "Concrete costs",
+      "url": "/#costs"
     }
   ]
 }

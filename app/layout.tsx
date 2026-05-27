@@ -2,21 +2,21 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ServiceWorker } from '@/components/service-worker';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://fieldconvert.example.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://convert.vindk.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'FieldConvert - Fast Unit Conversions for Worksites, Farms and Classrooms',
+    default: 'FieldConvert - Fast Unit Converter',
     template: '%s | FieldConvert'
   },
-  description: 'Mobile-first unit conversion platform for engineering, construction, farming, mining, trades and African markets.',
+  description: 'A fast, mobile-first unit converter for everyday metric, imperial, field and technical conversions.',
   applicationName: 'FieldConvert',
   manifest: '/manifest.webmanifest',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'FieldConvert',
-    description: 'Fast field-ready conversions, calculators and AI conversion search.',
+    description: 'Fast mobile-first unit converter.',
     url: siteUrl,
     siteName: 'FieldConvert',
     type: 'website'

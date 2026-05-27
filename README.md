@@ -1,6 +1,6 @@
-# FieldConvert
+# ConcreteMix Pro
 
-Modern mobile-first unit conversion platform and PWA for engineering, construction, farming, mining, trades, education and African-market field use.
+Production-ready offline-first concrete calculator for contractors, builders, owner-builders and onsite crews. The app opens directly to the calculator, stores all data locally, installs as a PWA, and keeps working after installation without a backend, login, cloud sync or live currency service.
 
 ## Run Locally
 
@@ -21,52 +21,71 @@ npm start
 
 ## What Is Included
 
-- Next.js App Router with static SEO conversion pages
-- React + TypeScript + Tailwind CSS
-- Shared conversion engine and practical calculator logic
-- Natural-language conversion parser for phrase-style input
-- PWA manifest, install support and service worker offline cache
-- API route at `POST /api/convert`
-- Dynamic sitemap and robots routes
-- Lightweight admin overview for categories, calculators and SEO inventory
-- Deployment docs for Vercel, Cloudflare Pages and Netlify
+- Mobile-first React + Next.js PWA with install metadata and offline service worker.
+- Concrete volume calculator for slab, circle, column, beam, stair and custom volume.
+- Purpose-based MPa, PSI, mix ratio and cement type recommendations.
+- Built-in strength database from 5 MPa to 30 MPa+ design mix guidance.
+- Cement, sand, aggregate, water, bags, mixer loads and wheelbarrow estimates.
+- Offline cost calculator with local currency symbol and saved prices.
+- Settings for dark/light mode, units, bag size, wastage, dry factor, water-cement ratio, densities and site capacities.
+- Local-only persistence through browser storage for settings, costs and saved estimates.
+- Printable PDF workflow through the browser print dialog, plus native share where supported.
 
-## Example URLs
+## Sample Calculation
 
-- `/convert/cm-to-inch`
-- `/convert/hectare-to-acre`
-- `/construction/concrete-calculator`
-- `/farming/crop-spacing-calculator`
-- `/tools/solar-sizing-calculator`
-- `/admin`
+Default slab example:
 
-## Environment
+- Shape: rectangle slab
+- Dimensions: 4 m x 3 m x 0.1 m
+- Wet volume: 1.2 m³ / 1,200 liters / 42.38 ft³
+- Purpose: domestic slab
+- Recommended strength: 20 MPa / 2,900 PSI
+- Ratio: 1 : 1.5 : 3
+- Dry volume factor: 1.54
+- Default wastage: 5%
 
-Copy `.env.example` to `.env.local` and set values as needed.
+## Screenshots
 
-```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_ADSENSE_CLIENT_ID=
-NEXT_PUBLIC_ANALYTICS_ID=
-CURRENCY_API_URL=
-CURRENCY_API_KEY=
-ADMIN_TOKEN=change-me
+- Mobile: `public/screenshots/mobile.svg`
+- Desktop: `public/screenshots/desktop.svg`
+
+## Build Targets
+
+### Web PWA
+
+```powershell
+npm run build
+npm start
 ```
 
-## API Examples
+Deploy the built Next.js app to any static/server Next host. The PWA manifest and `public/sw.js` provide install and offline behavior.
 
-```bash
-curl -X POST http://localhost:3000/api/convert \
-  -H "Content-Type: application/json" \
-  -d "{\"category\":\"length\",\"from\":\"foot\",\"to\":\"centimeter\",\"value\":6.1667}"
+### Android APK and iOS
+
+This codebase is ready for the React + Capacitor route. Add Capacitor when native packaging is needed:
+
+```powershell
+npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
+npx cap init ConcreteMixPro com.concretemix.pro --web-dir=.next
+npm run build
+npx cap add android
+npx cap add ios
+npx cap sync
+npx cap open android
+npx cap open ios
 ```
 
-```bash
-curl -X POST http://localhost:3000/api/convert \
-  -H "Content-Type: application/json" \
-  -d "{\"query\":\"Convert 6 foot 2 to cm\"}"
-```
+Build the APK from Android Studio. Build iOS from Xcode on macOS with an Apple developer account.
 
-## Notes
+### Windows Desktop
 
-Currency detection is scaffolded for African currencies and can be connected to a live FX provider through `CURRENCY_API_URL` and `CURRENCY_API_KEY`. The admin route is currently a lightweight operational shell; add authentication and persistent storage before exposing editorial controls publicly.
+Use the PWA install flow in Microsoft Edge or package the web app with a desktop wrapper such as Electron/Tauri if a standalone `.exe` installer is required.
+
+## Architecture
+
+- UI layer: `components/concrete-mix-pro.tsx`
+- Calculation engine: `lib/concrete/engine.ts`
+- Unit utilities: `lib/concrete/units.ts`
+- Offline persistence: `lib/concrete/storage.ts`
+- PDF/print export service: `lib/concrete/pdf.ts`
+- Concrete data and defaults: `lib/concrete/data.ts`
